@@ -1,0 +1,85 @@
+<Configuration status="WARN">
+	<Properties>
+		<Property name="kafka.logs.dirs">D:\kafka_2.12-2.4.0\logs</Property>
+	</Properties>
+    <Appenders>
+        <Console name="stdout" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%d] %p %m (%c)%n"/>
+        </Console>
+        <RollingFile name="kafkaAppender" fileName="${kafka.logs.dir}/server.log"
+                     filePattern="${kafka.logs.dir}/server-%d{yyyy-MM-dd-HH}.log.gz">
+            <PatternLayout pattern="[%d] %p %m (%c)%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="stateChangeAppender" fileName="${kafka.logs.dir}/state-change.log"
+                     filePattern="${kafka.logs.dir}/state-change-%d{yyyy-MM-dd-HH}.log.gz">
+            <PatternLayout pattern="[%d] %p %m (%c)%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="requestAppender" fileName="${kafka.logs.dir}/kafka-request.log"
+                     filePattern="${kafka.logs.dir}/kafka-request-%d{yyyy-MM-dd-HH}.log.gz">
+            <PatternLayout pattern="[%d] %p %m (%c)%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="cleanerAppender" fileName="${kafka.logs.dir}/log-cleaner.log"
+                     filePattern="${kafka.logs.dir}/log-cleaner-%d{yyyy-MM-dd-HH}.log.gz">
+            <PatternLayout pattern="[%d] %p %m (%c)%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="controllerAppender" fileName="${kafka.logs.dir}/controller.log"
+                     filePattern="${kafka.logs.dir}/controller-%d{yyyy-MM-dd-HH}.log.gz">
+            <PatternLayout pattern="[%d] %p %m (%c)%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="authorizerAppender" fileName="${kafka.logs.dir}/kafka-authorizer.log"
+                     filePattern="${kafka.logs.dir}/kafka-authorizer-%d{yyyy-MM-dd-HH}.log.gz">
+            <PatternLayout pattern="[%d] %p %m (%c)%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="stdout"/>
+            <AppenderRef ref="kafkaAppender"/>
+        </Root>
+        <Logger name="org.apache.zookeeper" level="info" additivity="false">
+            <AppenderRef ref="stdout"/>
+        </Logger>
+        <Logger name="kafka" level="info" additivity="false">
+            <AppenderRef ref="stdout"/>
+        </Logger>
+        <Logger name="org.apache.kafka" level="info" additivity="false">
+            <AppenderRef ref="stdout"/>
+        </Logger>
+        <Logger name="kafka.request.logger" level="warn" additivity="false">
+            <AppenderRef ref="requestAppender"/>
+        </Logger>
+        <Logger name="kafka.network.RequestChannel$" level="warn" additivity="false">
+            <AppenderRef ref="requestAppender"/>
+        </Logger>
+        <Logger name="kafka.controller" level="trace" additivity="false">
+            <AppenderRef ref="controllerAppender"/>
+        </Logger>
+        <Logger name="kafka.log.LogCleaner" level="info" additivity="false">
+            <AppenderRef ref="cleanerAppender"/>
+        </Logger>
+        <Logger name="state.change.logger" level="info" additivity="false">
+            <AppenderRef ref="stateChangeAppender"/>
+        </Logger>
+        <Logger name="kafka.authorizer.logger" level="info" additivity="false">
+            <AppenderRef ref="authorizerAppender"/>
+        </Logger>
+    </Loggers>
+</Configuration>

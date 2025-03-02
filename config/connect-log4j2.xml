@@ -1,0 +1,30 @@
+<Configuration status="WARN">
+	<Properties>
+		<Property name="connect.log.pattern"></Property>
+		<Property name="kafka.logs.dirs">D:\kafka_2.12-2.4.0\logs</Property>
+	</Properties>
+    <Appenders>
+        <Console name="stdout" target="SYSTEM_OUT">
+            <PatternLayout pattern="${connect.log.pattern}"/>
+        </Console>
+        <RollingFile name="connectAppender" fileName="${kafka.logs.dir}/connect.log"
+                     filePattern="${kafka.logs.dir}/connect-%d{yyyy-MM-dd-HH}.log.gz">
+            <PatternLayout pattern="${connect.log.pattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="stdout"/>
+            <AppenderRef ref="connectAppender"/>
+        </Root>
+        <Logger name="org.apache.zookeeper" level="error" additivity="false">
+            <AppenderRef ref="stdout"/>
+        </Logger>
+        <Logger name="org.reflections" level="error" additivity="false">
+            <AppenderRef ref="stdout"/>
+        </Logger>
+    </Loggers>
+</Configuration>
