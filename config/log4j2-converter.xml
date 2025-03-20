@@ -1,0 +1,80 @@
+<?xml version="1.0" ?>
+<Configuration name="Log4j1">
+	<Appenders>
+		<RollingFile name="cleanerAppender" fileName="/log-cleaner.log" filePattern="/log-cleaner.log%d{'.'yyyy-MM-dd-HH}">
+			<PatternLayout pattern="[%d] %v1Level %m (%c)%n"/>
+			<Policies>
+				<TimeBasedTriggeringPolicy modulate="true"/>
+			</Policies>
+			<DefaultRolloverStrategy max="2147483647" fileIndex="min"/>
+		</RollingFile>
+		<RollingFile name="stateChangeAppender" fileName="/state-change.log" filePattern="/state-change.log%d{'.'yyyy-MM-dd-HH}">
+			<PatternLayout pattern="[%d] %v1Level %m (%c)%n"/>
+			<Policies>
+				<TimeBasedTriggeringPolicy modulate="true"/>
+			</Policies>
+			<DefaultRolloverStrategy max="2147483647" fileIndex="min"/>
+		</RollingFile>
+		<Console name="stdout" target="SYSTEM_OUT">
+			<PatternLayout pattern="[%d] %v1Level %m (%c)%n"/>
+		</Console>
+		<RollingFile name="controllerAppender" fileName="/controller.log" filePattern="/controller.log%d{'.'yyyy-MM-dd-HH}">
+			<PatternLayout pattern="[%d] %v1Level %m (%c)%n"/>
+			<Policies>
+				<TimeBasedTriggeringPolicy modulate="true"/>
+			</Policies>
+			<DefaultRolloverStrategy max="2147483647" fileIndex="min"/>
+		</RollingFile>
+		<RollingFile name="kafkaAppender" fileName="/server.log" filePattern="/server.log%d{'.'yyyy-MM-dd-HH}">
+			<PatternLayout pattern="[%d] %v1Level %m (%c)%n"/>
+			<Policies>
+				<TimeBasedTriggeringPolicy modulate="true"/>
+			</Policies>
+			<DefaultRolloverStrategy max="2147483647" fileIndex="min"/>
+		</RollingFile>
+		<RollingFile name="requestAppender" fileName="/kafka-request.log" filePattern="/kafka-request.log%d{'.'yyyy-MM-dd-HH}">
+			<PatternLayout pattern="[%d] %v1Level %m (%c)%n"/>
+			<Policies>
+				<TimeBasedTriggeringPolicy modulate="true"/>
+			</Policies>
+			<DefaultRolloverStrategy max="2147483647" fileIndex="min"/>
+		</RollingFile>
+		<RollingFile name="authorizerAppender" fileName="/kafka-authorizer.log" filePattern="/kafka-authorizer.log%d{'.'yyyy-MM-dd-HH}">
+			<PatternLayout pattern="[%d] %v1Level %m (%c)%n"/>
+			<Policies>
+				<TimeBasedTriggeringPolicy modulate="true"/>
+			</Policies>
+			<DefaultRolloverStrategy max="2147483647" fileIndex="min"/>
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Root level="INFO">
+			<AppenderRef ref="kafkaAppender"/>
+			<AppenderRef ref="stdout"/>
+		</Root>
+		<Logger name="org.apache.zookeeper" level="INFO"/>
+		<Logger name="org.apache.kafka" level="INFO"/>
+		<Logger name="org.apache.kafka.controller" level="INFO">
+			<AppenderRef ref="controllerAppender"/>
+		</Logger>
+		<Logger name="state.change.logger" level="INFO">
+			<AppenderRef ref="stateChangeAppender"/>
+		</Logger>
+		<Logger name="kafka.request.logger" level="WARN">
+			<AppenderRef ref="requestAppender"/>
+		</Logger>
+		<Logger name="kafka.controller" level="TRACE">
+			<AppenderRef ref="controllerAppender"/>
+		</Logger>
+		<Logger name="kafka" level="INFO"/>
+		<Logger name="kafka.authorizer.logger" level="INFO">
+			<AppenderRef ref="authorizerAppender"/>
+		</Logger>
+		<Logger name="kafka.network.RequestChannel$" level="WARN">
+			<AppenderRef ref="requestAppender"/>
+		</Logger>
+		<Logger name="kafka.log.LogCleaner" level="INFO">
+			<AppenderRef ref="cleanerAppender"/>
+		</Logger>
+	</Loggers>
+</Configuration>
